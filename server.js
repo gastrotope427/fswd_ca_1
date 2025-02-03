@@ -4,36 +4,35 @@ const port = 8000 ;
 
 app.use(express.json());
 
-app.listen(port, ()=>{
-    console.log(`Server is running at http://localhost:${port}`);
-    
-})
-
-app.get('/', (req, res) => {
-    res.send("hello")
+app.get('/', (req,res) => {
+    res.send("Hello, express server is running");
 });
 
-app.post('/signup', (req, res) => {
-    const {username, email, password, dateOfBirth} = req.body
+app.listen(port, ()=>{
+    console.log(`Server is running at http://localhost:${port}`);
+});
 
-    if(!username){
-        return res.status(400).json({ error: "Username cannot be empty"})
+app.post('/signup', (req,res) => {
+    const { username, email, password, dateOfBirth } = req.body;
+
+    if (!username){
+        return res.status(400).json({ error: "Username cannot be empty"}) ; 
     }
 
-    if(!email){
-        return res.status(400).json({ error: "Email cannot be empty"})
+    if (!email){
+        return res.status(400).json({ error: "Email cannot be empty"}) ;
     }
 
-    if(!password){
-        return res.status(400).json({ error: "Password cannot be enpty"})
+    if (!password){
+        return res.status(400).json({ error: "Password cannot be empty"}) ;
     }
 
-    if(password.length < 8 && password.length  > 16){
-        return res.status(400).json({ error: "Pass"})
+    if (password.length > 8 && password.length <= 16){
+        return res.status(400).json({ error: "Password length should be greater than 8 or less than or equal to 16 "});
     }
 
-    if(!dateOfBirth){
-        return res.status(400).json({ error: "Date of birth cannot be empty"})
+    if (!dateOfBirth){
+        return res.status(400).json({ error: "Date Of Birth cannot be empty"});
     }
 
     res.status(201).json({
@@ -41,7 +40,7 @@ app.post('/signup', (req, res) => {
         user: {
             username,
             email,
-            dateOfBirth
+            dateOfBirth,
         }
-    })
-})
+    });
+});
